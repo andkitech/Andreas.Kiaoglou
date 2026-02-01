@@ -1,78 +1,229 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andreas Kiaoglou | Electrician</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Andreas Kiaoglou | Digital Card</title>
 <style>
+:root{
+  --cyan:#00cfff;
+  --cyan2:#2ad6ff;
+  --text:#ffffff;
+  --panel1:#0a0f16;
+  --panel2:#020304;
+}
+*{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background: radial-gradient(circle at top, #0b1a22, #000000);
-  color:white;
-  text-align:center;
+  margin:0; min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding:18px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 50% 35%, rgba(0,207,255,.26), transparent 55%),
+    radial-gradient(circle at 20% 15%, rgba(42,214,255,.10), transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(42,214,255,.08), transparent 52%),
+    linear-gradient(180deg, #05070a, #000);
+  overflow-x:hidden;
 }
 
-.logo{
-  margin-top:40px;
+.card{
+  width:100%;
+  max-width:460px;
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(0,207,255,.20), transparent 55%),
+    linear-gradient(160deg, var(--panel1), var(--panel2));
+  border:1px solid rgba(0,207,255,.35);
+  box-shadow:0 28px 70px rgba(0,0,0,.82);
 }
 
-.logo img{
-  width:150px;
-  height:150px;
+/* circuitry overlay */
+.card:before{
+  content:"";
+  position:absolute; inset:-2px;
+  background:
+    linear-gradient(90deg, rgba(0,207,255,.18) 1px, transparent 1px) 0 0/30px 30px,
+    linear-gradient(rgba(0,207,255,.12) 1px, transparent 1px) 0 0/30px 30px,
+    radial-gradient(circle at 25% 20%, rgba(0,207,255,.22), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(42,214,255,.18), transparent 45%);
+  opacity:.20;
+  pointer-events:none;
+}
+
+/* sparks */
+.card:after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle, rgba(42,214,255,.95) 0 1.2px, transparent 2px) 20% 30%/240px 240px,
+    radial-gradient(circle, rgba(0,207,255,.85) 0 1px, transparent 2px) 70% 25%/260px 260px,
+    radial-gradient(circle, rgba(255,255,255,.90) 0 1px, transparent 2px) 35% 75%/220px 220px,
+    radial-gradient(circle, rgba(42,214,255,.75) 0 1px, transparent 2px) 85% 80%/280px 280px,
+    radial-gradient(circle, rgba(0,207,255,.60) 0 1px, transparent 2px) 10% 85%/260px 260px;
+  opacity:.55;
+  filter: drop-shadow(0 0 6px rgba(0,207,255,.65));
+  animation: sparks 3.8s ease-in-out infinite;
+}
+@keyframes sparks{
+  0%{opacity:.25; transform:translateY(0) scale(1)}
+  50%{opacity:.72; transform:translateY(-2px) scale(1.01)}
+  100%{opacity:.25; transform:translateY(0) scale(1)}
+}
+
+.inner{position:relative; padding:22px 18px 16px;}
+
+.logoWrap{
+  width:140px; height:140px;
+  margin:6px auto 12px;
   border-radius:50%;
-  box-shadow:0 0 25px #00cfff;
+  display:grid; place-items:center;
+  background:transparent;
+  box-shadow:
+    0 0 0 3px rgba(0,207,255,.35),
+    0 0 28px rgba(0,207,255,.55);
 }
-
-h1{
-  margin-top:20px;
-  font-size:26px;
-}
-
-.motto{
-  color:#00cfff;
-  margin-bottom:30px;
-}
-
-.buttons{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-  padding:0 30px;
-}
-
-.btn{
-  background:#0b1a22;
-  border:1px solid #00cfff;
-  padding:15px;
-  border-radius:12px;
-  text-decoration:none;
-  color:white;
-  font-weight:bold;
-  box-shadow:0 0 10px #00cfff;
+.logoWrap img{
+  width:88%; height:88%;
+  object-fit:contain;
+  border-radius:50%;
+  display:block;
 }
 
 .lang{
-  margin-top:20px;
+  display:flex; justify-content:center; gap:10px;
+  margin:10px 0 10px;
+}
+.lang button{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.30);
+  color:#fff;
+  padding:7px 12px;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.lang .active{
+  border-color: rgba(0,207,255,.55);
+  background: rgba(0,207,255,.18);
 }
 
+.name{ text-align:center; font-size:26px; font-weight:900; margin:0; }
+.role{ text-align:center; color:var(--cyan); font-weight:800; margin-top:6px; }
+.motto{ text-align:center; color:rgba(255,255,255,.78); margin:10px 0 14px; }
+
+.buttons{ display:grid; gap:10px; margin-top:8px; }
+.btn{
+  text-decoration:none;
+  text-align:center;
+  padding:14px;
+  border-radius:14px;
+  font-weight:900;
+  color:#fff;
+  background:linear-gradient(180deg, rgba(10,15,22,.85), rgba(2,3,4,.95));
+  border:1px solid rgba(0,207,255,.36);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+}
+.btn:hover{
+  border-color: rgba(0,207,255,.65);
+  background:linear-gradient(180deg, rgba(15,31,42,.85), rgba(2,3,4,.95));
+}
+.btn.secondary{ border-color: rgba(255,255,255,.18); }
+
+.footer{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.10);
+  text-align:center;
+  color:rgba(255,255,255,.55);
+  font-size:12px;
+}
+.pills{
+  display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+  margin-top:10px;
+}
+.pill{
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,207,255,.20);
+  background: rgba(0,0,0,.22);
+  font-size:12px;
+  color:rgba(255,255,255,.85);
+}
 </style>
 </head>
-
 <body>
+  <div class="card">
+    <div class="inner">
 
-<div class="logo"> 
-<img src="https://raw.githubusercontent.com/andkitech/Andreas.Kiaoglou/main/logo.png" alt="logo">
+      <!-- LOGO: raw link + cache-buster -->
+      <div class="logoWrap">
+        <img src="https://raw.githubusercontent.com/andkitech/Andreas.Kiaoglou/main/logo.png?v=2" alt="logo">
+      </div>
 
+      <div class="lang">
+        <button id="el" class="active">ΕΛ</button>
+        <button id="en">EN</button>
+      </div>
 
-<h1 id="name">Ανδρέας Κιάογλου</h1>
-<div class="motto" id="motto">Ποιότητα • Ασφάλεια • Μεράκι</div>
+      <div id="gr">
+        <h1 class="name">Ανδρέας Κιάογλου</h1>
+        <div class="role">Ηλεκτρολόγος</div>
+        <div class="motto">Ποιότητα • Ασφάλεια • Μεράκι</div>
+      </div>
 
-<div class="buttons">
-  <a class="btn" href="tel:97932289">📞 Κλήση</a>
-  <a class="btn" href="mailto:andki.tech@gmail.com">✉️ Email</a>
-  <a class="btn" href=
-    
+      <div id="enC" style="display:none">
+        <h1 class="name">Andreas Kiaoglou</h1>
+        <div class="role">Electrician</div>
+        <div class="motto">Quality • Safety • Passion</div>
+      </div>
 
+      <div class="buttons">
+        <a class="btn" href="tel:97932289">📞 <span id="tCall">Κλήση</span></a>
+        <a class="btn" href="https://wa.me/35797932289">💬 WhatsApp</a>
+        <a class="btn" href="mailto:andki.tech@gmail.com">✉️ Email</a>
+        <a class="btn" href="https://maps.google.com/?q=Paphos">📍 Paphos</a>
+        <a class="btn secondary" href="./andreas_kiaoglou.vcf" download>➕ <span id="tSave">Αποθήκευση Επαφής</span></a>
+      </div>
 
+      <div class="footer">
+        <div id="tHint">Tip: Πάτησε «Αποθήκευση Επαφής» για να σε βάλουν στο κινητό τους.</div>
+        <div class="pills">
+          <span class="pill">📞 97932289</span>
+          <span class="pill">✉️ andki.tech@gmail.com</span>
+          <span class="pill">📍 Paphos</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+const elBtn=document.getElementById('el');
+const enBtn=document.getElementById('en');
+const gr=document.getElementById('gr');
+const enC=document.getElementById('enC');
+const tCall=document.getElementById('tCall');
+const tSave=document.getElementById('tSave');
+const tHint=document.getElementById('tHint');
+
+function setLang(isEl){
+  gr.style.display = isEl ? 'block' : 'none';
+  enC.style.display = isEl ? 'none' : 'block';
+  elBtn.classList.toggle('active', isEl);
+  enBtn.classList.toggle('active', !isEl);
+  tCall.textContent = isEl ? 'Κλήση' : 'Call';
+  tSave.textContent = isEl ? 'Αποθήκευση Επαφής' : 'Save Contact';
+  tHint.textContent = isEl
+    ? 'Tip: Πάτησε «Αποθήκευση Επαφής» για να σε βάλουν στο κινητό τους.'
+    : 'Tip: Tap “Save Contact” to add you to their phone.';
+  document.documentElement.lang = isEl ? 'el' : 'en';
+}
+elBtn.onclick=()=>setLang(true);
+enBtn.onclick=()=>setLang(false);
+</script>
+</body>
+</html>
